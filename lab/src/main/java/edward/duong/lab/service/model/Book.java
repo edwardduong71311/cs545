@@ -5,8 +5,8 @@ import lombok.*;
 @Data
 @Builder
 @AllArgsConstructor
+@ToString
 public class Book {
-    @NonNull
     private Integer id;
     private String title;
     private String isbn;
