@@ -1,6 +1,6 @@
 package edward.duong.lab.book;
 
-import edward.duong.lab.service.DefaultBookService;
+import edward.duong.lab.service.iml.DefaultBookService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
