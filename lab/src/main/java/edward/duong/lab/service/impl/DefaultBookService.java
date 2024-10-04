@@ -1,7 +1,8 @@
-package edward.duong.lab.service.iml;
+package edward.duong.lab.service.impl;
 
+import edward.duong.lab.service.BookRepository;
 import edward.duong.lab.service.BookService;
-import edward.duong.lab.service.model.Book;
+import edward.duong.lab.service.model.BookModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,14 @@ import java.util.stream.Stream;
 @Service
 @Primary
 public class DefaultBookService implements BookService {
-    public List<Book> getBooks() {
-        return Stream.iterate(0, i -> i < 10, i -> i + 1).map(index -> Book.builder()
+
+    private final BookRepository bookRepository;
+    DefaultBookService(BookRepository repository) {
+        this.bookRepository = repository;
+    }
+
+    public List<BookModel> getBooks() {
+        return Stream.iterate(0, i -> i < 10, i -> i + 1).map(index -> BookModel.builder()
                 .id(index)
                 .title("Title " + index)
                 .isbn("ISBN " + index)
@@ -23,8 +30,8 @@ public class DefaultBookService implements BookService {
     }
 
     @Override
-    public Book getBookById(int index) {
-        return Book.builder()
+    public BookModel getBookById(int index) {
+        return BookModel.builder()
                 .id(index)
                 .title("Title " + index)
                 .isbn("ISBN " + index)
@@ -32,9 +39,10 @@ public class DefaultBookService implements BookService {
     }
 
     @Override
-    public void saveBook(Book book) {
+    public void saveBook(BookModel book) {
         if (Objects.isNull(book.getId())) {
             log.info("Save the book: {}", book);
+            bookRepository.saveBook(book);
             return;
         }
 
